@@ -59,7 +59,8 @@ objectForKey:@"CFBundleShortVersionString"]
 #define kCellDefaultHeight      (44.f)
 #define kEnglishKeyboardHeight  (216.f)
 #define kChineseKeyboardHeight  (252.f)
-#define kNavigationBarHeight    (64.0f)
+//适配iPhone X
+#define kNavigationBarHeight    (([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(1125, 2436), [[UIScreen mainScreen] currentMode].size) ? 88 : 64: 64))
 
 // View 坐标(x,y)和宽高(width,height)
 #define X(v)                    (v).frame.origin.x

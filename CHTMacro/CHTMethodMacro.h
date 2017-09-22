@@ -11,6 +11,23 @@
 
 /* *************************** 这里存放一些不常用的 ***************************************/
 
+// iPhone X 适配scrollview
+#define  adjustsScrollViewInsets(scrollView)\
+do {\
+_Pragma("clang diagnostic push")\
+_Pragma("clang diagnostic ignored \"-Warc-performSelector-leaks\"")\
+if ([scrollView respondsToSelector:NSSelectorFromString(@"setContentInsetAdjustmentBehavior:")]) {\
+NSMethodSignature *signature = [UIScrollView instanceMethodSignatureForSelector:@selector(setContentInsetAdjustmentBehavior:)];\
+NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:signature];\
+NSInteger argument = 2;\
+invocation.target = scrollView;\
+invocation.selector = @selector(setContentInsetAdjustmentBehavior:);\
+[invocation setArgument:&argument atIndex:2];\
+[invocation retainArguments];\
+[invocation invoke];\
+}\
+_Pragma("clang diagnostic pop")\
+} while (0)
 
 //用来消除一些地方调用performSelector方法的警告
 #define QFHKSuppressPerformSelectorLeakWarning(Stuff) \
@@ -85,6 +102,5 @@ return nil; \
 { \
 return self; \
 }
-#endif
 
 #endif /* CHTMethodMacro_h */
